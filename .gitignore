@@ -1,3 +1,6 @@
+# API KEY ENVIROMENTS:
+.env
+
 # Miscellaneous
 *.class
 *.log
