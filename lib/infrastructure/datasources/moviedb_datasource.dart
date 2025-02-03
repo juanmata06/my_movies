@@ -9,7 +9,7 @@ import 'package:my_movies/infrastructure/models/moviedb/moviedb_response.dart';
 class MoviesDbDatasource extends MoviesDataSource {
   //* General configs for Dio usage
   final dio = Dio(BaseOptions(
-      baseUrl: 'https://api.themoviedb.org/',
+      baseUrl: 'https://api.themoviedb.org/3/',
       queryParameters: {
         'api_key': Enviroment.theMovieDbKey,
         'languaje': 'ex-MX'
@@ -17,7 +17,7 @@ class MoviesDbDatasource extends MoviesDataSource {
 
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
-    final response = await dio.get('/movie/now_playing');
+    final response = await dio.get('movie/now_playing');
 
     //* Store the API response in a general response model
     final movieDbResponse = MovieDbResponse.fromJson(response.data);
