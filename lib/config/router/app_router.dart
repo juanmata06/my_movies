@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:my_movies/presentation/screens/screens.dart';
+import 'package:my_movies/presentation/screens/screens_exports.dart';
 
 //* Go Router configs:
 final appRouter = GoRouter(

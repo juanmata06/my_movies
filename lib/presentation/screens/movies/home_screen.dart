@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:my_movies/presentation/provider/providers.dart';
+import 'package:my_movies/presentation/provider/providers_exports.dart';
+import 'package:my_movies/presentation/widgets/widgets_exports.dart';
 
 class HomeScreen extends StatelessWidget {
   static const name = 'home-screen';
@@ -33,14 +34,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
-    return ListView.builder(
-      itemCount: nowPlayingMovies.length,
-      itemBuilder: (BuildContext context, int index) {
-        final movie = nowPlayingMovies[index];
-        return ListTile(
-          title: Text(movie.title),
-        );
-      },
+    return Column(
+      children: [
+        CustomAppBar(),
+        MoviesCarousel(movies: nowPlayingMovies)
+      ],
     );
   }
 }
