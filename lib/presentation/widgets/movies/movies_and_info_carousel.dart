@@ -58,7 +58,7 @@ class _MoviesAndInfoCarouselState extends State<MoviesAndInfoCarousel> {
           scrollDirection: Axis.horizontal,
           physics: const ClampingScrollPhysics(),
           itemBuilder: (context, index) {
-            return _MoviesCarousel(movie: widget.movies[index]);
+            return FadeInRight(child: _MoviesCarousel(movie: widget.movies[index]));
           },
         )
         )

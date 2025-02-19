@@ -37,6 +37,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final initialLoading = ref.watch(initialLoadingProvider);
+    if (initialLoading) return const FullScreenLoader();
 
     final carouselMovies = ref.watch(moviesCarouselProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
@@ -44,48 +46,46 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final popularMovies = ref.watch(popularMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
 
-    return CustomScrollView(
-      slivers: [
-        const SliverAppBar(
-          floating: true,
-          flexibleSpace: FlexibleSpaceBar(
-            title: CustomAppBar(),
-          ),
+    return CustomScrollView(slivers: [
+      const SliverAppBar(
+        floating: true,
+        flexibleSpace: FlexibleSpaceBar(
+          title: CustomAppBar(),
         ),
-        SliverList(delegate: SliverChildBuilderDelegate(
-          (context, index){
-            return Column(children: [
-              MoviesCarousel(movies: carouselMovies),
-              MoviesAndInfoCarousel(
+      ),
+      SliverList(delegate: SliverChildBuilderDelegate(
+        childCount: 1,
+        (context, index) {
+          return Column(children: [
+            MoviesCarousel(movies: carouselMovies),
+            MoviesAndInfoCarousel(
                 movies: nowPlayingMovies,
                 title: 'In theaters',
                 subtitle: 'Monday 17',
-                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                loadNextPage: () =>ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()
               ),
-              MoviesAndInfoCarousel(
+            MoviesAndInfoCarousel(
                 movies: upcomingMovies,
                 title: 'Very soon',
                 subtitle: 'Next month',
                 loadNextPage: () => ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
               ),
-              MoviesAndInfoCarousel(
+            MoviesAndInfoCarousel(
                 movies: popularMovies,
                 title: 'Most populars',
                 // subtitle: '',
                 loadNextPage: () => ref.read(popularMoviesProvider.notifier).loadNextPage(),
               ),
-              MoviesAndInfoCarousel(
+            MoviesAndInfoCarousel(
                 movies: topRatedMovies,
                 title: 'Top rated',
                 subtitle: 'TMDB',
                 loadNextPage: () => ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
               ),
-              const SizedBox(height: 10)
-            ]);
-          },
-          childCount: 1
-        ))
-      ]
-    );
+            const SizedBox(height: 10),
+          ]);
+        }
+      ))
+    ]);
   }
 }
