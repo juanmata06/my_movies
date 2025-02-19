@@ -56,14 +56,13 @@ class _MoviesAndInfoCarouselState extends State<MoviesAndInfoCarousel> {
           controller: scrollController,
           itemCount: widget.movies.length,
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           itemBuilder: (context, index) {
             return _MoviesCarousel(movie: widget.movies[index]);
           },
         )
         )
-      ],
-      ),
+      ]),
     );
   }
 }

@@ -29,7 +29,10 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   void initState() {
     super.initState();
-    ref.read(nowPlayingMoviesProvider.notifier).loadNextPageNowPlayingMovies();
+    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
@@ -37,7 +40,10 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     final carouselMovies = ref.watch(moviesCarouselProvider);
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
-    
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
+
     return CustomScrollView(
       slivers: [
         const SliverAppBar(
@@ -54,25 +60,25 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                 movies: nowPlayingMovies,
                 title: 'In theaters',
                 subtitle: 'Monday 17',
-                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPageNowPlayingMovies(),
+                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
               ),
               MoviesAndInfoCarousel(
-                movies: nowPlayingMovies,
+                movies: upcomingMovies,
                 title: 'Very soon',
                 subtitle: 'Next month',
-                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPageNowPlayingMovies(),
+                loadNextPage: () => ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
               ),
               MoviesAndInfoCarousel(
-                movies: nowPlayingMovies,
+                movies: popularMovies,
                 title: 'Most populars',
                 // subtitle: '',
-                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPageNowPlayingMovies(),
+                loadNextPage: () => ref.read(popularMoviesProvider.notifier).loadNextPage(),
               ),
               MoviesAndInfoCarousel(
-                movies: nowPlayingMovies,
-                title: 'Highest rated',
+                movies: topRatedMovies,
+                title: 'Top rated',
                 subtitle: 'TMDB',
-                loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPageNowPlayingMovies(),
+                loadNextPage: () => ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
               ),
               const SizedBox(height: 10)
             ]);

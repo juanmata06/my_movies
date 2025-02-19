@@ -6,7 +6,21 @@ import 'package:my_movies/presentation/provider/movies/movies_repository_provide
 
 final nowPlayingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
   final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
+  return MoviesNotifier(fetchMoreMovies: fetchMoreMovies);
+});
 
+final upcomingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getUpcoming;
+  return MoviesNotifier(fetchMoreMovies: fetchMoreMovies);
+});
+
+final popularMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getPopular;
+  return MoviesNotifier(fetchMoreMovies: fetchMoreMovies);
+});
+
+final topRatedMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
+  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getTopRated;
   return MoviesNotifier(fetchMoreMovies: fetchMoreMovies);
 });
 
@@ -21,10 +35,9 @@ class MoviesNotifier extends StateNotifier<List<Movie>> {
     required this.fetchMoreMovies,
   }) : super([]);
 
-  Future<void> loadNextPageNowPlayingMovies() async {
+  Future<void> loadNextPage() async {
     if (isLoading) return;
     isLoading = true;
-    print('LOADING');
     currentPage++;
     final List<Movie> movies = await fetchMoreMovies(page: currentPage);
     state = [...state, ...movies];
